@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyTimesSquare</string>
+    <string name="day_name_format">E</string>
+    <!--  <string name="invalid_date">Date must be between %1$s and %2$s.</string> -->
+    <string name="invalid_date">无效的日期</string>
+    <string name="month_name_format">yyyy年MM月</string>
+</resources>
