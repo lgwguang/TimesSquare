@@ -1,6 +1,7 @@
 package com.up.mytimessquare;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 此实体为用户进入预订机票前的一些选择项信息
@@ -16,6 +17,7 @@ public class UserTicketChoose implements Serializable {
 	public String SCity, SCityCode,ECity,ECityCode;
 	public String SDetailDate,EDetailDate;
 	public String SDate, SWeek, EDate, EWeek;
+	public Date startDate,endDate;
 	public String OrderType="Normal",AirCorpName,AirCorpCode,TelePhoneNum;
 	private boolean isLimite=false, isRoundTrip; 
 	public long OrderId=0;
@@ -183,4 +185,19 @@ public class UserTicketChoose implements Serializable {
 		this.isRoundTrip = isRoundTrip;
 	}
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 }

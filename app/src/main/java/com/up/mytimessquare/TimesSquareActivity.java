@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,10 +51,11 @@ public class TimesSquareActivity extends AppCompatActivity implements CalendarPi
         calendar.setOnDateSelectedListener(this);
         //Date selectedDates = new Date();
         Collection<Date> selectedDates = new ArrayList<>();
-        selectedDates.add(new Date());
-        selectedDates.add(nextDay.getTime());
+        selectedDates.add(ticketChoose.getStartDate());
+        selectedDates.add(ticketChoose.getEndDate());
         calendar.init(new Date(), nextYear.getTime())
                 .inMode(CalendarPickerView.SelectionMode.RANGE).withSelectedDates(selectedDates);
+
     }
 
     @Override
@@ -66,10 +68,12 @@ public class TimesSquareActivity extends AppCompatActivity implements CalendarPi
                 ticketChoose.setSDetailDate(formatDate(date1)[0]);
                 ticketChoose.setSDate(formatDate(date1)[1]);
                 ticketChoose.setSWeek(formatDate(date1)[2]);
+                ticketChoose.setStartDate(date1);
                 Date date2 = calendar.getSelectedDates().get(calendar.getSelectedDates().size() - 1);
                 ticketChoose.setEDetailDate(formatDate(date2)[0]);
                 ticketChoose.setEDate(formatDate(date2)[1]);
                 ticketChoose.setEWeek(formatDate(date2)[2]);
+                ticketChoose.setEndDate(date2);
                 EventBus.getDefault().post(ticketChoose);
                 finish();
             }

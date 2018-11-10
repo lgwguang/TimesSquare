@@ -10,6 +10,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView tv_from_time;
@@ -17,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_return_time;
     private TextView tv_return_day;
     private UserTicketChoose userTicketChoose;
-
+    private Date startDate,endDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +35,25 @@ public class MainActivity extends AppCompatActivity {
         tv_return_time = (TextView)findViewById(R.id.tv_return_time);
         tv_return_day = (TextView)findViewById(R.id.tv_return_day);
 
-        findViewById(R.id.layout_from_day).setOnClickListener(new View.OnClickListener() {
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,1);
+        endDate = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日/EEEE",Locale.getDefault());
+        startDate = new Date();
+        String time = sdf.format(startDate);
+        String[] times = time.split("/");
+
+        String nextTime = sdf.format(endDate);
+        final String[] nextTimes = nextTime.split("/");
+
+        tv_from_time.setText(times[0]);
+        tv_from_day.setText(times[1]);
+        tv_return_time.setText(nextTimes[0]);
+        tv_return_day.setText(nextTimes[1]);
+
+
+        /*findViewById(R.id.layout_from_day).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userTicketChoose.setIsRoundTrip(false);
@@ -39,13 +62,17 @@ public class MainActivity extends AppCompatActivity {
                 intent.setClass(MainActivity.this, TimesSquareActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         findViewById(R.id.layout_return_day).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userTicketChoose.setIsRoundTrip(true);
-                userTicketChoose.setSDetailDate("11月07日");
-                userTicketChoose.setEDetailDate("11月07日");
+                userTicketChoose.setStartDate(startDate);
+                userTicketChoose.setEndDate(endDate);
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日");
+                System.out.println("点击====================="+sdf2.format(startDate));
+                System.out.println("点击====================="+sdf2.format(endDate));
+
                 Intent intent = new Intent();
                 intent.putExtra("userTicketChoose", userTicketChoose);
                 intent.setClass(MainActivity.this, TimesSquareActivity.class);
@@ -66,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
             tv_return_time.setText(userChooseBack.getEDate());
             tv_return_day.setText(userChooseBack.getEWeek());
         }
+        startDate = userChooseBack.getStartDate();
+        endDate = userChooseBack.getEndDate();
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日");
+        System.out.println("====================="+sdf2.format(startDate));
+        System.out.println("====================="+sdf2.format(endDate));
     }
 
     @Override
